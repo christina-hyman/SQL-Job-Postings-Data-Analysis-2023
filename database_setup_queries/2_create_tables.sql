@@ -8,6 +8,7 @@ CREATE TABLE public.company_dim
     thumbnail TEXT
 );
 
+
 -- Create skills_dim table with primary key
 CREATE TABLE public.skills_dim
 (
@@ -36,7 +37,8 @@ CREATE TABLE public.job_postings_fact
     salary_year_avg NUMERIC,
     salary_hour_avg NUMERIC,
     FOREIGN KEY (company_id) REFERENCES public.company_dim (company_id)
-);
+); 
+
 
 -- Create skills_job_dim table with a composite primary key and foreign keys
 CREATE TABLE public.skills_job_dim
