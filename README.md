@@ -34,7 +34,7 @@ For my deep dive into the data analyst job market, I harnessed the power of seve
 * **Git & GitHub**: Essential for version control and sharing my SQL scripts and analysis, ensuring collaboration and project tracking.<br>
 
 
-## The Analysis
+## The Analysis: Part 1
 
 ### 1. Monthly Trends in Job Postings
 Which months have the highest amount of job postings?<br>
@@ -244,3 +244,52 @@ The top ten companies are: **Booz Allen Hamilton**, **Emprego**, **Walmart**, **
 | Deloitte                | 705               |
 | Leidos                  | 648               |
 | Dice                    | 579               |
+
+
+## The Analysis: Part 2
+
+### 1. Identifying the Most In-Demand Skills for Each Profession.
+What are the most in-demand skills for each profession?<br>
+
+This SQL query counts the number of job postings for each profession and skill, calculates the percentage of total job postings for each skill, and orders the results by the number of postings. I create a CTE `total_count_cte` to count the total number of job postings for the `percentage_of_total_jobs` column to calculate the number of job posting mentioned a skill (grouped by profession) over the total amount of job postings (regardless of profession). I also joined the `skills_job_dim`, `skills_dim` and `total_count_cte` tables for this analysis.<br>
+
+I also created a Custom Query in Tableau using the SQL query below to create the packed bubbles visual. This was extremely in facilitating the filters and configuration of the packed bubbles visual in Tableau.
+
+```sql
+WITH total_count_cte AS (
+    SELECT
+        COUNT(job_id) AS total_count
+    FROM job_postings_fact
+)
+
+
+SELECT
+    j.profession as profession,
+    COUNT(j.job_id) AS skill_count,
+    s.skills AS skill,
+    s.type as skill_type,
+    ROUND(((COUNT(j.job_id) * 1.0 / cte.total_count) * 100),4) AS percentage_of_total_jobs
+FROM job_postings_fact AS j
+JOIN skills_job_dim AS sj USING (job_id)
+JOIN skills_dim AS s USING (skill_id)
+JOIN total_count_cte AS cte ON 1=1
+GROUP BY profession, s.skills, skill_type, cte.total_count
+ORDER BY skill_count DESC;
+```
+<a href="https://public.tableau.com/views/JobPostingsDataAnalysis2023/SkillDemand?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" target="_blank" rel="noopener noreferrer">View the Skills Demand Packed Bubbles here!</a>
+
+### 2. Analyzing Monthly Job Postings for Each Profession
+How many job postings were posted each month for each profession?<br>
+
+
+
+### 3. Examining Job Postings by Company for Each Profession
+How many jobs were posted for each company for each profession?<br>
+
+
+### 4. Investigating Job Postings by Country, Highlighting the Top 10 Countries with the Most Job Postings
+How many job postings were posted in each country? Show the top 10 countries with the most job postings.<br>
+
+
+### 5. Calculating the Average Salary for Each Profession and Senior Profession
+What is the average salary for each profession and senior profession?<br>
