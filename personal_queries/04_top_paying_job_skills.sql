@@ -4,9 +4,7 @@
 WITH top_100_highest_paying AS(
     SELECT
         job_id as job_id,
-        job_title as job_title,
         ROUND(salary_year_avg,0) as salary_avg,
-        job_location
     FROM job_postings_fact
     WHERE
         profession = 'Data Scientist'
