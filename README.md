@@ -278,7 +278,7 @@ HAVING ROUND(((COUNT(j.job_id) * 1.0 / cte.total_count) * 100),4) >= 5
 ORDER BY skill_count DESC;
 ```
 #### Results
-
+[![Skills Demand Packed Bubbles](tableau_sheets/skills_demand_packed_bubbles.png)](https://public.tableau.com/views/JobPostingsDataAnalysis2023/SkillDemandbyProfession?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
 - SQL and Python are the top required skills across professions, especially for Data Engineers and Data Scientists.
 - Cloud skills like AWS and Azure are highly relevant for Data Engineers.
 - Analyst tools like Excel, Tableau, and Power BI are more common for Data Analysts.
@@ -302,9 +302,6 @@ ORDER BY skill_count DESC;
 | Data Engineer   | 45814       | java      | programming      | 5.8163%         |
 | Data Analyst    | 45482       | power bi  | analyst_tools    | 5.7741%         |
 
-[![Skills Demand Packed Bubbles](tableau_sheets/skills_demand_packed_bubbles.png)](https://public.tableau.com/views/JobPostingsDataAnalysis2023/SkillDemandbyProfession?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
-
-<div class='tableauPlaceholder' id='viz1728760684653' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Jo&#47;JobPostingsDataAnalysis2023&#47;SkillDemandbyProfession&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='JobPostingsDataAnalysis2023&#47;SkillDemandbyProfession' /><param name='tabs' value='yes' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Jo&#47;JobPostingsDataAnalysis2023&#47;SkillDemandbyProfession&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1728760684653');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
 ________________________________________________________________________________________________________________________
 ### 2. Analyzing Monthly Job Postings for Each Profession
 How many job postings were posted each month for each profession?<br>
@@ -322,6 +319,7 @@ GROUP BY month_number, month, profession
 ORDER BY profession;
 ```
 #### Results
+[![Monthly Job Postings Bar Chart](tableau_sheets/monthly_job_postings_bar_chart.png)](https://public.tableau.com/views/JobPostingsDataAnalysis2023/NumberofPostingsbyProfessionMonthly?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
 Overall, the data indicates a robust demand for Data Analytic, Data Engineering, and Data Science roles. As discussed earlier, January has the highest amount of postings.
 
 | Month      | # of Job Postings | Profession                | Month Number |
@@ -347,8 +345,6 @@ Overall, the data indicates a robust demand for Data Analytic, Data Engineering,
 | January    | 5133              | Software Engineer         | 1            |
 | ...        | ...               | ...                       | ...          |
 | December   | 3878              | Software Engineer         | 12           |
-
-![Monthly Job Postings Bar Chart](tableau_sheets/monthly_job_postings_bar_chart.png)
 ________________________________________________________________________________________________________________________
 ### 3. Examining Job Postings by Company for Each Profession
 How many jobs were posted for each company for each profession?<br>
@@ -366,7 +362,6 @@ ORDER BY number_of_job_postings DESC;
 ```
 #### Results
 The top 3 companies that are hiring are Emprego, Booz Allen Hamilton, and Dice. There are 140033 companies, so scroll away!
-
 ![Job Postings By Company](tableau_sheets/job_postings_by_company.png)
 ________________________________________________________________________________________________________________________
 ### 4. Investigating Job Postings by Country, Highlighting the Top 10 Countries with the Most Job Postings
@@ -384,6 +379,7 @@ LIMIT 10;
 ```
 
 #### Results
+[![Job Postings Around the World](tableau_sheets/job_postings_around_the_world.png)](https://public.tableau.com/views/JobPostingsDataAnalysis2023/JobPostingsAroundtheWorld?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
 
 The top 10 countries with the most job postings are:
 | Country            | # of Job Postings |
@@ -400,8 +396,6 @@ The top 10 countries with the most job postings are:
 | Italy              | 17073             |
 
 Australia, South America, and Antartica did not make the list.
-
-![Job Postings Around the World](tableau_sheets/job_postings_around_the_world.png)
 ________________________________________________________________________________________________________________________
 ### 5. Calculating the Average Salary for Each Profession and Senior Profession
 What is the average salary for each profession and senior profession?<br>
@@ -419,6 +413,8 @@ ORDER BY average_salary_avg DESC
 ```
 
 #### Results
+[![Average Salary by Profession and Experience](tableau_sheets/average_salary_by_profession_and_experience.png)](https://public.tableau.com/views/JobPostingsDataAnalysis2023/AverageSalarybyProfessionandExperience?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+
 This indicates a clear salary progression from non-senior roles to more senior technical positions. Senior Data Scientist and Senior Data Engineering job postings have the highest average salaries ($154,050 and 145,867 respectively). Data Analyst and Business Analysts have the lowest average salaries ($93,876 and $91,071 respectively). However, salary progression is evident from a Data Analyst position to Senior Data Analyst position with a 21.54% increase in average salary.
 
 | Profession                 | Average Salary Avg ($) |
@@ -433,6 +429,3 @@ This indicates a clear salary progression from non-senior roles to more senior t
 | Cloud Engineer             | 111,268                |
 | Data Analyst               | 93,876                 |
 | Business Analyst           | 91,071                 |
-
-
-![Average Salary by Profession and Experience](tableau_sheets/average_salary_by_profession_and_experience.png)
