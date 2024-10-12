@@ -6,4 +6,4 @@ SELECT
 FROM job_postings_fact
 WHERE salary_year_avg IS NOT NULL
 GROUP BY job_title_short
-ORDER BY profession
+ORDER BY average_salary_avg DESC
