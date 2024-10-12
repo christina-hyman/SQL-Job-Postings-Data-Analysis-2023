@@ -251,7 +251,7 @@ The top ten companies are: **Booz Allen Hamilton**, **Emprego**, **Walmart**, **
 ### 1. Identifying the Most In-Demand Skills for Each Profession.
 What are the most in-demand skills for each profession?<br>
 
-This SQL query counts the number of job postings for each profession and skill, calculates the percentage of total job postings for each skill, and orders the results by the number of postings. I create a CTE `total_count_cte` to count the total number of job postings for the `percentage_of_total_jobs` column to calculate the number of job posting mentioned a skill (grouped by profession) over the total amount of job postings (regardless of profession). I also joined the `skills_job_dim`, `skills_dim` and `total_count_cte` tables for this analysis.<br>
+This SQL query counts the number of job postings for each profession and skill, calculates the percentage of total job postings for each skill, and orders the results by the number of postings. I create a CTE `total_count_cte` to count the total number of job postings for the `percentage_of_total_jobs` column to calculate the number of job posting mentioned a skill (grouped by profession) over the total amount of job postings (regardless of profession). I also joined the `skills_job_dim`, `skills_dim` and `total_count_cte` tables for this analysis. The results are limited to the percentage of job postings mentioning the skill for a given profession being greater than 5%.<br>
 
 I also created a Custom Query in Tableau using the SQL query below to create the packed bubbles visual. This was extremely in facilitating the filters and configuration of the packed bubbles visual in Tableau.
 
@@ -274,11 +274,36 @@ JOIN skills_job_dim AS sj USING (job_id)
 JOIN skills_dim AS s USING (skill_id)
 JOIN total_count_cte AS cte ON 1=1
 GROUP BY profession, s.skills, skill_type, cte.total_count
+HAVING ROUND(((COUNT(j.job_id) * 1.0 / cte.total_count) * 100),4) >= 5
 ORDER BY skill_count DESC;
 ```
-<a href="https://public.tableau.com/views/JobPostingsDataAnalysis2023/SkillDemand?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" target="_blank">View Skills Demand Packed Bubbles</a>
+#### Results
 
+- SQL and Python are the top required skills across professions, especially for Data Engineers and Data Scientists.
+- Cloud skills like AWS and Azure are highly relevant for Data Engineers.
+- Analyst tools like Excel, Tableau, and Power BI are more common for Data Analysts.
+- Skills like Spark and Java are also significant for Data Engineers but less so for other professions.
+- Because Business Analyst (6.24%), Cloud Engineer (1.57%), and Machine Learning Engineer (1.79%) professions compromise less than 10% of the job postings, the top skills for those professions are not in the results.
 
+| Profession      | Skill Count | Skill     | Skill Type       | % of Total Jobs |
+|-----------------|-------------|-----------|------------------|-----------------|
+| Data Engineer   | 142062      | sql       | programming      | 18.0354%        |
+| Data Scientist  | 140012      | python    | programming      | 17.7751%        |
+| Data Engineer   | 137245      | python    | programming      | 17.4238%        |
+| Data Analyst    | 110380      | sql       | programming      | 14.0132%        |
+| Data Scientist  | 97835       | sql       | programming      | 12.4206%        |
+| Data Engineer   | 81578       | aws       | cloud            | 10.3567%        |
+| Data Engineer   | 77054       | azure     | cloud            | 9.7823%         |
+| Data Analyst    | 75348       | excel     | analyst_tools    | 9.5657%         |
+| Data Scientist  | 72526       | r         | programming      | 9.2075%         |
+| Data Engineer   | 69905       | spark     | libraries        | 8.8747%         |
+| Data Analyst    | 68409       | python    | programming      | 8.6848%         |
+| Data Analyst    | 56569       | tableau   | analyst_tools    | 7.1817%         |
+| Data Engineer   | 45814       | java      | programming      | 5.8163%         |
+| Data Analyst    | 45482       | power bi  | analyst_tools    | 5.7741%         |
+
+![Skills Demand Packed Bubbles](tableau_sheets/skills_demand_packed_bubbles.png)
+________________________________________________________________________________________________________________________
 ### 2. Analyzing Monthly Job Postings for Each Profession
 How many job postings were posted each month for each profession?<br>
 
@@ -321,6 +346,8 @@ Overall, the data indicates a robust demand for Data Analytic, Data Engineering,
 | ...        | ...               | ...                       | ...          |
 | December   | 3878              | Software Engineer         | 12           |
 
+![Monthly Job Postings Bar Chart](tableau_sheets/monthly_job_postings_bar_chart.png)
+________________________________________________________________________________________________________________________
 ### 3. Examining Job Postings by Company for Each Profession
 How many jobs were posted for each company for each profession?<br>
 
@@ -338,6 +365,8 @@ ORDER BY number_of_job_postings DESC;
 #### Results
 The top 3 companies that are hiring are Emprego, Booz Allen Hamilton, and Dice. There are 140033 companies, so scroll away!
 
+![Job Postings By Company](tableau_sheets/job_postings_by_company.png)
+________________________________________________________________________________________________________________________
 ### 4. Investigating Job Postings by Country, Highlighting the Top 10 Countries with the Most Job Postings
 How many job postings were posted in each country? Show the top 10 countries with the most job postings.<br>
 
@@ -370,6 +399,8 @@ The top 10 countries with the most job postings are:
 
 Australia, South America, and Antartica did not make the list.
 
+![Job Postings Around the World](tableau_sheets/job_postings_around_the_world.png)
+________________________________________________________________________________________________________________________
 ### 5. Calculating the Average Salary for Each Profession and Senior Profession
 What is the average salary for each profession and senior profession?<br>
 
@@ -386,6 +417,8 @@ ORDER BY average_salary_avg DESC
 ```
 
 #### Results
+This indicates a clear salary progression from non-senior roles to more senior technical positions. Senior Data Scientist and Senior Data Engineering job postings have the highest average salaries ($154,050 and 145,867 respectively). Data Analyst and Business Analysts have the lowest average salaries ($93,876 and $91,071 respectively). However, salary progression is evident from a Data Analyst position to Senior Data Analyst position with a 21.54% increase in average salary.
+
 | Profession                 | Average Salary Avg ($) |
 |----------------------------|------------------------|
 | Senior Data Scientist      | 154,050                |
@@ -399,4 +432,5 @@ ORDER BY average_salary_avg DESC
 | Data Analyst               | 93,876                 |
 | Business Analyst           | 91,071                 |
 
-This indicates a clear salary progression from non-senior roles to more senior technical positions. Senior Data Scientist and Senior Data Engineering job postings have the highest average salaries ($154,050 and 145,867 respectively). Data Analyst and Business Analysts have the lowest average salaries ($93,876 and $91,071 respectively). However, salary progression is evident from a Data Analyst position to Senior Data Analyst position with a 21.54% increase in average salary.
+
+![Average Salary by Profession and Experience](tableau_sheets/average_salary_by_profession_and_experience.png)
