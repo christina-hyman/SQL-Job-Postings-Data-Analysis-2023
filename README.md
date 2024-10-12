@@ -1,4 +1,4 @@
-# Job Search Data Analysis using SQL
+# Job Postings Data Analysis using SQL
 ## Introduction
 
 📊 Dive into the data job market! Focusing on data scientist roles, this project explores 💰 top-paying jobs, 🔥 in-demand skills, and 📈 where high demand meets high salary in the Data Science field.
@@ -34,7 +34,7 @@ For my deep dive into the data analyst job market, I harnessed the power of seve
 * **Git & GitHub**: Essential for version control and sharing my SQL scripts and analysis, ensuring collaboration and project tracking.<br>
 
 
-## The Analysis
+## The Analysis: Part 1
 
 ### 1. Monthly Trends in Job Postings
 Which months have the highest amount of job postings?<br>
@@ -244,3 +244,159 @@ The top ten companies are: **Booz Allen Hamilton**, **Emprego**, **Walmart**, **
 | Deloitte                | 705               |
 | Leidos                  | 648               |
 | Dice                    | 579               |
+
+
+## The Analysis: Part 2
+
+### 1. Identifying the Most In-Demand Skills for Each Profession.
+What are the most in-demand skills for each profession?<br>
+
+This SQL query counts the number of job postings for each profession and skill, calculates the percentage of total job postings for each skill, and orders the results by the number of postings. I create a CTE `total_count_cte` to count the total number of job postings for the `percentage_of_total_jobs` column to calculate the number of job posting mentioned a skill (grouped by profession) over the total amount of job postings (regardless of profession). I also joined the `skills_job_dim`, `skills_dim` and `total_count_cte` tables for this analysis.<br>
+
+I also created a Custom Query in Tableau using the SQL query below to create the packed bubbles visual. This was extremely in facilitating the filters and configuration of the packed bubbles visual in Tableau.
+
+```sql
+WITH total_count_cte AS (
+    SELECT
+        COUNT(job_id) AS total_count
+    FROM job_postings_fact
+)
+
+
+SELECT
+    j.profession as profession,
+    COUNT(j.job_id) AS skill_count,
+    s.skills AS skill,
+    s.type as skill_type,
+    ROUND(((COUNT(j.job_id) * 1.0 / cte.total_count) * 100),4) AS percentage_of_total_jobs
+FROM job_postings_fact AS j
+JOIN skills_job_dim AS sj USING (job_id)
+JOIN skills_dim AS s USING (skill_id)
+JOIN total_count_cte AS cte ON 1=1
+GROUP BY profession, s.skills, skill_type, cte.total_count
+ORDER BY skill_count DESC;
+```
+<a href="https://public.tableau.com/views/JobPostingsDataAnalysis2023/SkillDemand?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" target="_blank">View Skills Demand Packed Bubbles</a>
+
+
+### 2. Analyzing Monthly Job Postings for Each Profession
+How many job postings were posted each month for each profession?<br>
+
+This SQL query counts the number of job postings for each profession, grouped by month. I used the TO_CHAR function to format the `job_posted_date` to display the full name of the month. I also used EXTRACT function to extract the month number for grouping. The results are ordered by profession, allowing for a clear overview of monthly hiring trends across different professions.
+
+```sql
+SELECT 
+    TO_CHAR(job_posted_date, 'Month') AS month,
+    COUNT(job_id) as number_of_job_postings,
+    profession as profession,
+    EXTRACT(MONTH FROM job_posted_date) AS month_number
+FROM job_postings_fact
+GROUP BY month_number, month, profession
+ORDER BY profession;
+```
+#### Results
+Overall, the data indicates a robust demand for Data Analytic, Data Engineering, and Data Science roles. As discussed earlier, January has the highest amount of postings.
+
+| Month      | # of Job Postings | Profession                | Month Number |
+|------------|-------------------|---------------------------|--------------|
+| January    | 4881              | Business Analyst          | 1            |
+| ...        | ...               | ...                       | ...          |
+| December   | 4126              | Business Analyst          | 12           |
+| January    | 1300              | Cloud Engineer            | 1            |
+| ...        | ...               | ...                       | ...          |
+| December   | 1154              | Cloud Engineer            | 12           |
+| January    | 27372             | Data Analyst              | 1            |
+| ...        | ...               | ...                       | ...          |
+| December   | 15889             | Data Analyst              | 12           |
+| January    | 26633             | Data Engineer             | 1            |
+| ...        | ...               | ...                       | ...          |
+| December   | 16524             | Data Engineer             | 12           |
+| January    | 25542             | Data Scientist            | 1            |
+| ...        | ...               | ...                       | ...          |
+| December   | 14861             | Data Scientist            | 12           |
+| January    | 1405              | Machine Learning Engineer | 1            |
+| ...        | ...               | ...                       | ...          |
+| December   | 1260              | Machine Learning Engineer | 12           |
+| January    | 5133              | Software Engineer         | 1            |
+| ...        | ...               | ...                       | ...          |
+| December   | 3878              | Software Engineer         | 12           |
+
+### 3. Examining Job Postings by Company for Each Profession
+How many jobs were posted for each company for each profession?<br>
+
+This SQL query retrieves the number of job postings for each profession by company. I order results in descending order based on the count of job postings, highlighting the companies with the highest number of job listings per profession.
+```sql
+SELECT
+    c.name as company,
+    j.profession as profession,
+    COUNT(j.job_id) as number_of_job_postings
+FROM job_postings_fact as j
+JOIN company_dim AS c USING (company_id)
+GROUP BY name, profession
+ORDER BY number_of_job_postings DESC;
+```
+#### Results
+The top 3 companies that are hiring are Emprego, Booz Allen Hamilton, and Dice. There are 140033 companies, so scroll away!
+
+### 4. Investigating Job Postings by Country, Highlighting the Top 10 Countries with the Most Job Postings
+How many job postings were posted in each country? Show the top 10 countries with the most job postings.<br>
+
+This SQL query retrieves the total number of job postings grouped by country from the `job_postings_fact` table. It counts the number of job postings and groups the count by country. I order the results in descending order based on the number of job postings and limit the output to the top 10 countries with the highest number of job postings.
+```sql
+SELECT
+    COUNT(job_id) as number_of_job_postings,
+    job_country
+FROM job_postings_fact
+GROUP BY job_country 
+ORDER BY number_of_job_postings DESC
+LIMIT 10;
+```
+
+#### Results
+
+The top 10 countries with the most job postings are:
+| Country            | # of Job Postings |
+|--------------------|-------------------|
+| United States      | 206943            |
+| India              | 51197             |
+| United Kingdom     | 40439             |
+| France             | 40028             |
+| Germany            | 27782             |
+| Spain              | 25123             |
+| Singapore          | 23702             |
+| Sudan              | 21519             |
+| Netherlands        | 20673             |
+| Italy              | 17073             |
+
+Australia, South America, and Antartica did not make the list.
+
+### 5. Calculating the Average Salary for Each Profession and Senior Profession
+What is the average salary for each profession and senior profession?<br>
+
+This SQL query calculates the average annual salary for each profession listed in the `job_postings_fact` table. I filter out records with null salary values, group the results by `job_title_short` (which represents the profession), and round the average salaries to the nearest whole number. Finally, I order the results by the average salary in descending order.
+
+```sql
+SELECT
+    job_title_short as profession,
+    ROUND(AVG(salary_year_avg),0) as average_salary_avg
+FROM job_postings_fact
+WHERE salary_year_avg IS NOT NULL
+GROUP BY job_title_short
+ORDER BY average_salary_avg DESC
+```
+
+#### Results
+| Profession                 | Average Salary Avg ($) |
+|----------------------------|------------------------|
+| Senior Data Scientist      | 154,050                |
+| Senior Data Engineer       | 145,867                |
+| Data Scientist             | 135,929                |
+| Data Engineer              | 130,267                |
+| Machine Learning Engineer  | 126,786                |
+| Senior Data Analyst        | 114,104                |
+| Software Engineer          | 112,778                |
+| Cloud Engineer             | 111,268                |
+| Data Analyst               | 93,876                 |
+| Business Analyst           | 91,071                 |
+
+This indicates a clear salary progression from non-senior roles to more senior technical positions. Senior Data Scientist and Senior Data Engineering job postings have the highest average salaries ($154,050 and 145,867 respectively). Data Analyst and Business Analysts have the lowest average salaries ($93,876 and $91,071 respectively). However, salary progression is evident from a Data Analyst position to Senior Data Analyst position with a 21.54% increase in average salary.
