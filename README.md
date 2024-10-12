@@ -276,7 +276,8 @@ JOIN total_count_cte AS cte ON 1=1
 GROUP BY profession, s.skills, skill_type, cte.total_count
 ORDER BY skill_count DESC;
 ```
-<a href="https://public.tableau.com/views/JobPostingsDataAnalysis2023/SkillDemand?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" target="_blank" rel="noopener noreferrer">View the Skills Demand Packed Bubbles here!</a>
+<a href="https://public.tableau.com/views/JobPostingsDataAnalysis2023/SkillDemand?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" target="_blank">View Skills Demand Packed Bubbles</a>
+
 
 ### 2. Analyzing Monthly Job Postings for Each Profession
 How many job postings were posted each month for each profession?<br>
