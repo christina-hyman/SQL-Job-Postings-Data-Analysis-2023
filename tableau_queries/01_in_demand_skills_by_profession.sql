@@ -18,4 +18,5 @@ JOIN skills_job_dim AS sj USING (job_id)
 JOIN skills_dim AS s USING (skill_id)
 JOIN total_count_cte AS cte ON 1=1
 GROUP BY profession, s.skills, skill_type, cte.total_count
+HAVING ROUND(((COUNT(j.job_id) * 1.0 / cte.total_count) * 100),4) >= 5
 ORDER BY skill_count DESC;
