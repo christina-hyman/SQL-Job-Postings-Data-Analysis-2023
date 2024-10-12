@@ -4,7 +4,7 @@
 📊 Dive into the data job market! Focusing on data scientist roles, this project explores 💰 top-paying jobs, 🔥 in-demand skills, and 📈 where high demand meets high salary in the Data Science field.
 
 ## Background
-Driven by a quest to navigate the data analyst job market more effectively, this project was born from a desire to pinpoint top-paid and in-demand skills, streamlining others work to find optimal jobs.
+Driven by a quest to navigate the data science job market more effectively, this project was born from a desire to pinpoint top-paid and in-demand skills, streamlining others work to find optimal jobs.
 
 The data used for this project packed with insights on job titles, salaries, locations, and essential skills.
 
@@ -23,6 +23,9 @@ The data used for this project packed with insights on job titles, salaries, loc
 4. How many job postings were posted in each country? Show the top 10 countries with the most job postings.
 5. What is the average salary for each profession and senior profession?
 
+[View the Tableau Dashboard by right clicking this link to open it in a new tab](https://public.tableau.com/views/JobPostingsDataAnalysis2023/JobPostingDataAnalysis2023?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+
+The visuals in The Analysis: Part 2 are hyperlinked, so right click and open them in a new tab for the interactive part!
 
 ## Tools I Used
 For my deep dive into the data analyst job market, I harnessed the power of several key tools:
@@ -429,3 +432,34 @@ This indicates a clear salary progression from non-senior roles to more senior t
 | Cloud Engineer             | 111,268                |
 | Data Analyst               | 93,876                 |
 | Business Analyst           | 91,071                 |
+
+
+## What I Learned
+Throughout this project, I've turbocharged my SQL toolbox:
+
+🧩 Complex Query Crafting: Mastered advanced SQL, merging tables, creating CTE's using WITH clauses for out of this world calculations, and using functions like TO_CHAR() and EXTRACT() to gain insight on dates.
+📊 Data Aggregation: Got cozy with GROUP BY and HAVING and incorporated aggregate functions like COUNT() and AVG().
+💡 Analytical Wizardry: Leveled up my real-world puzzle-solving skills, turning questions into actionable, insightful SQL queries.
+
+## Conclusion
+
+Here are some key insights drawn from the analysis of the job postings data, focusing on trends, skill demands, and hiring activity:
+
+**1. Top Skills for Data Scientist Roles in New York:**<br>
+Python and SQL are the most in-demand skills for Data Scientist roles, reflecting their central importance in data manipulation and analysis.
+R, AWS, and Spark are also highly sought-after, highlighting the need for cloud computing and big data management expertise.
+Machine learning libraries such as PyTorch and TensorFlow are key to high-paying jobs, reflecting the increasing demand for AI-driven solutions.<br>
+**2. High-Paying Data Scientist Jobs – Common Skills:**<br>
+Among the top 100 highest-paying Data Scientist jobs, Python is required in 77% of roles, with SQL and R following at 55% and 35%, respectively.
+The presence of Spark and Tableau in high-paying roles shows the importance of both big data processing and visualization tools.<br>
+**3. In-Demand Skills Across Professions:**<br>
+SQL and Python dominate the job market for data professionals, including Data Engineers, Data Analysts, and Data Scientists.
+For Data Engineers, AWS, Azure, and Spark are crucial skills, indicating the importance of cloud platforms and big data tools.
+For Data Analysts, Excel, Tableau, and Power BI are widely demanded, reflecting the need for visualization and reporting skills.<br>
+**4. Monthly Job Posting Trends by Profession:**<br>
+Across all professions, January is the busiest hiring month, with Data Analysts and Data Engineers showing the highest levels of job postings.
+December tends to see a dip in job postings, likely due to the holiday season and end-of-year slowdowns in hiring.<br>
+**5. Hiring by Companies for Each Profession:**<br>
+Emprego, Booz Allen Hamilton, and Dice emerge as the top hiring companies, offering a broad range of job postings across professions.
+The high number of postings from these companies indicates their large-scale recruitment needs, possibly driven by multiple projects or client engagements.
+These insights can guide both job seekers and employers in understanding the dynamics of the job market, particularly for data-centric roles. They also shed light on when and where hiring activity is most concentrated, as well as which skills are most critical to securing high-paying positions.
